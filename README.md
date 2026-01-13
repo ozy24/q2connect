@@ -5,15 +5,78 @@ A high-performance, native Windows desktop application to browse Quake II multip
 **Author:** ozy  
 **Repository:** https://github.com/ozy24/q2browser
 
-## Prerequisites
+## Features
+
+- ✅ Query Quake II master servers
+- ✅ Probe individual game servers with throttled concurrent requests
+- ✅ Real-time server list updates (non-blocking UI)
+- ✅ Search and filter servers
+- ✅ Favorites persistence
+- ✅ Direct launch Quake 2 executable with server connection
+
+---
+
+## For Users
+
+### Prerequisites
+
+- **Windows 10/11** (x64)
+- **Quake 2** executable (quake2.exe, q2pro.exe, r1q2.exe, etc.)
+
+### Installation & Running
+
+1. **Download and extract** the application files
+2. **Run Q2Browser.exe** (or use `dotnet run --project Q2Browser.Wpf/Q2Browser.Wpf.csproj` if running from source)
+
+### Getting Started
+
+1. **Launch the application**
+2. **Configure settings** (click "Settings" button):
+   - **Quake 2 Executable**: Click "Browse..." to select your Quake 2 executable
+   - **Master Server**: Configure HTTP or UDP master server settings (defaults work for most users)
+   - **Options**: Enable/disable refresh on startup, LAN broadcast discovery
+3. **Click "Refresh"** to query the master server and discover game servers
+4. **Filter servers** by name, map, or mod using the filter box
+5. **Double-click a server** or select it and click "Connect" to launch Quake 2
+6. **Toggle favorites** by selecting a server and clicking "Toggle Favorite"
+
+### Settings
+
+Settings and favorites are stored in different locations depending on the **Portable Mode** setting:
+
+**Portable Mode (Default - Enabled):**
+- Settings: `settings.json` in the same directory as the executable
+- Favorites: `favorites.json` in the same directory as the executable
+
+**AppData Mode (Portable Mode Disabled):**
+- Settings: `%AppData%\Q2Browser\settings.json`
+- Favorites: `%AppData%\Q2Browser\favorites.json`
+
+**Notes:**
+- Portable mode is enabled by default, making it easy to keep all application data with the executable
+- You can switch between modes in the Settings window
+- When switching modes, the old files are preserved (not deleted) in case you want to switch back
+- **Log Level**: Controls log verbosity. Default is "Warning" (shows only warnings and errors). Can be configured in Settings → Advanced. Set to "Debug" for detailed troubleshooting logs.
+
+### Troubleshooting
+
+- **Quake 2 executable not launching**: Check that the Quake 2 executable path in Settings points to a valid executable (quake2.exe, q2pro.exe, r1q2.exe, etc.)
+- **No servers found**: Check your internet connection and firewall settings (UDP port 27900)
+- **UI freezes during refresh**: Reduce `MaxConcurrentProbes` in Settings → Advanced
+
+---
+
+## For Developers
+
+### Prerequisites
 
 - **.NET 8 SDK** - Download from [https://dotnet.microsoft.com/download/dotnet/8.0](https://dotnet.microsoft.com/download/dotnet/8.0)
 - **Windows 10/11** (x64)
-- **Visual Studio Code** with the **C# extension** (ms-dotnettools.csharp)
+- **Visual Studio Code** with the **C# extension** (ms-dotnettools.csharp) - optional, any IDE with .NET support works
 
-## Building the Project
+### Building the Project
 
-### Using Visual Studio Code
+#### Using Visual Studio Code
 
 1. **Open the project folder** in Visual Studio Code:
    ```bash
@@ -45,7 +108,7 @@ A high-performance, native Windows desktop application to browse Quake II multip
    dotnet run --project Q2Browser.Wpf/Q2Browser.Wpf.csproj
    ```
 
-### Alternative: Build from Terminal
+#### Using Command Line
 
 Open PowerShell or Command Prompt in the project root and run:
 
@@ -60,57 +123,7 @@ dotnet build Q2Browser.sln
 dotnet run --project Q2Browser.Wpf/Q2Browser.Wpf.csproj
 ```
 
-## Configuration
-
-Before launching games, you need to configure the Quake 2 executable path and other settings.
-
-### Using the Settings Window
-
-1. **Launch the application** (see [Running the Application](#running-the-application) below)
-2. **Click the "Settings" button** in the main window toolbar
-3. **Configure your settings**:
-   - **Portable Mode**: Enabled by default - stores settings and favorites in the application directory. Disable to use AppData location.
-   - **Quake 2 Executable**: Click "Browse..." to select your Quake 2 executable (e.g., `quake2.exe`, `q2pro.exe`, `r1q2.exe`, etc.)
-   - **Master Server**: Configure HTTP or UDP master server settings
-   - **Options**: Enable/disable refresh on startup, LAN broadcast discovery
-   - **Advanced**: Adjust concurrent probes and timeout settings
-4. **Click "Save"** to apply your changes
-
-### Settings File Location
-
-Settings and favorites are stored in different locations depending on the **Portable Mode** setting:
-
-**Portable Mode (Default - Enabled):**
-- Settings: `settings.json` in the same directory as the executable
-- Favorites: `favorites.json` in the same directory as the executable
-
-**AppData Mode (Portable Mode Disabled):**
-- Settings: `%AppData%\Q2ServerBrowser\settings.json`
-- Favorites: `%AppData%\Q2ServerBrowser\favorites.json`
-
-**Note**: 
-- Portable mode is enabled by default, making it easy to keep all application data with the executable
-- You can switch between modes in the Settings window
-- When switching modes, the old files are preserved (not deleted) in case you want to switch back
-- While you can manually edit the JSON files if needed, it's recommended to use the Settings window in the application UI to avoid configuration errors
-- **Log Level**: The `LogLevel` setting (Debug, Info, Warning, Error) is only configurable via the settings.json file. Default is "Info". Set to "Debug" for detailed troubleshooting logs.
-
-## Running the Application
-
-1. **Launch the app**:
-   ```bash
-   dotnet run --project Q2Browser.Wpf/Q2Browser.Wpf.csproj
-   ```
-
-2. **Click "Refresh"** to query the master server and discover game servers
-
-3. **Search** for servers by name, map, or mod using the search box
-
-4. **Double-click a server** or select it and click "Connect" to launch your configured Quake 2 executable
-
-5. **Toggle favorites** by selecting a server and clicking "Toggle Favorite"
-
-## Project Structure
+### Project Structure
 
 ```
 Q2Browser.sln
@@ -133,37 +146,20 @@ Q2Browser.sln
     └── SettingsTests.cs
 ```
 
-## Features
-
-- ✅ Query Quake II master servers
-- ✅ Probe individual game servers with throttled concurrent requests
-- ✅ Real-time server list updates (non-blocking UI)
-- ✅ Search and filter servers
-- ✅ Favorites persistence
-- ✅ Direct launch Quake 2 executable with server connection
-- ✅ Quake II color code support (^1, ^2, etc.)
-- ✅ Virtualized UI for smooth scrolling through hundreds of servers
-
-## Troubleshooting
-
-### Build Errors
-
-- **Missing .NET 8 SDK**: Ensure you have .NET 8 SDK installed (`dotnet --version` should show 8.x)
-- **NuGet restore fails**: Try `dotnet nuget locals all --clear` then `dotnet restore`
-
-### Runtime Issues
-
-- **Quake 2 executable not launching**: Check that `Q2ProExecutablePath` in settings.json points to a valid Quake 2 executable (quake2.exe, q2pro.exe, r1q2.exe, etc.)
-- **No servers found**: Check your internet connection and firewall settings (UDP port 27900)
-- **UI freezes during refresh**: This shouldn't happen due to throttled updates, but if it does, reduce `MaxConcurrentProbes` in settings
-
-## Development Notes
+### Development Notes
 
 - The Core library (`Q2Browser.Core`) has no WPF dependencies, making it portable for future cross-platform migrations
 - Server probing is throttled to 75 concurrent requests by default to prevent router packet loss
 - UI updates are batched every 150ms to prevent thread saturation
 - All networking operations are fully async and non-blocking
 - Comprehensive unit tests (61 tests) covering protocol parsing, validation, and core functionality
+
+### Troubleshooting Build Issues
+
+- **Missing .NET 8 SDK**: Ensure you have .NET 8 SDK installed (`dotnet --version` should show 8.x)
+- **NuGet restore fails**: Try `dotnet nuget locals all --clear` then `dotnet restore`
+
+---
 
 ## License
 

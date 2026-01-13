@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -23,7 +24,7 @@ public class SettingsViewModel : INotifyPropertyChanged
         _settings = new Settings();
         
         SaveCommand = new RelayCommand(async _ => await SaveSettingsAsync());
-        BrowseQ2ProCommand = new RelayCommand(_ => BrowseQ2ProExecutable());
+        BrowseQ2ExecutableCommand = new RelayCommand(_ => BrowseQ2Executable());
         CancelCommand = new RelayCommand(_ => { });
         
         _ = LoadSettingsAsync();
@@ -39,9 +40,10 @@ public class SettingsViewModel : INotifyPropertyChanged
         OnPropertyChanged(nameof(EnableLanBroadcast));
         OnPropertyChanged(nameof(RefreshOnStartup));
         OnPropertyChanged(nameof(PortableMode));
-        OnPropertyChanged(nameof(Q2ProExecutablePath));
+        OnPropertyChanged(nameof(Q2ExecutablePath));
         OnPropertyChanged(nameof(MaxConcurrentProbes));
         OnPropertyChanged(nameof(ProbeTimeoutMs));
+        OnPropertyChanged(nameof(LogLevel));
     }
 
     public string MasterServerAddress
@@ -153,14 +155,14 @@ public class SettingsViewModel : INotifyPropertyChanged
         }
     }
 
-    public string Q2ProExecutablePath
+    public string Q2ExecutablePath
     {
-        get => _settings.Q2ProExecutablePath;
+        get => _settings.Q2ExecutablePath;
         set
         {
-            if (_settings.Q2ProExecutablePath != value)
+            if (_settings.Q2ExecutablePath != value)
             {
-                _settings.Q2ProExecutablePath = value;
+                _settings.Q2ExecutablePath = value;
                 OnPropertyChanged();
             }
         }
@@ -198,21 +200,39 @@ public class SettingsViewModel : INotifyPropertyChanged
         }
     }
 
+    public string LogLevel
+    {
+        get => _settings.LogLevel;
+        set
+        {
+            // Validate log level
+            var validLevels = new[] { "Debug", "Info", "Warning", "Error" };
+            if (validLevels.Contains(value, StringComparer.OrdinalIgnoreCase))
+            {
+                if (_settings.LogLevel != value)
+                {
+                    _settings.LogLevel = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+    }
+
     public ICommand SaveCommand { get; }
-    public ICommand BrowseQ2ProCommand { get; }
+    public ICommand BrowseQ2ExecutableCommand { get; }
     public ICommand CancelCommand { get; }
 
-    private void BrowseQ2ProExecutable()
+    private void BrowseQ2Executable()
     {
         var dialog = new OpenFileDialog
         {
             Filter = "Executable files (*.exe)|*.exe|All files (*.*)|*.*",
-            Title = "Select Q2Pro Executable"
+            Title = "Select Quake 2 Executable"
         };
 
         if (dialog.ShowDialog() == true)
         {
-            Q2ProExecutablePath = dialog.FileName;
+            Q2ExecutablePath = dialog.FileName;
         }
     }
 
@@ -221,6 +241,9 @@ public class SettingsViewModel : INotifyPropertyChanged
         try
         {
             await _favoritesService.SaveSettingsAsync(_settings);
+            
+            // Update the DiagnosticLogger with the new log level
+            Services.DiagnosticLogger.Instance.SetMinimumLogLevel(_settings.LogLevel);
         }
         catch (Exception ex)
         {

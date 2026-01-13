@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 E:\Projects\q2-server-browser\Q2Browser.Wpf\App.xaml
-4-2125380036
+4777259972
 
-22642145713
+151161437783
 199-827554479
-Views\AboutWindow.xaml;Views\DiagnosticWindow.xaml;Views\MainWindow.xaml;Views\SettingsWindow.xaml;
+Views\AboutWindow.xaml;Views\LogWindow.xaml;Views\MainWindow.xaml;Views\SettingsWindow.xaml;
 
-True
+False
 

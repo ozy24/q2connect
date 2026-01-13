@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:Q2Browser.Wpf.Converters"
         mc:Ignorable="d"
-        Title="Settings" Height="690" Width="550"
+        Title="Settings" Height="730" Width="550"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize">
     <Window.Resources>
@@ -54,13 +54,13 @@
                 </StackPanel>
             </GroupBox>
 
-            <!-- Q2Pro Settings -->
+            <!-- Quake 2 Executable Settings -->
             <GroupBox Header="Quake 2 Executable (quake2.exe, q2pro.exe, r1q2.exe)" Margin="0,0,0,15">
                 <StackPanel Margin="10">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Path:" Width="120" VerticalAlignment="Center"/>
-                        <TextBox Text="{Binding Q2ProExecutablePath}" Width="250" VerticalContentAlignment="Center" IsReadOnly="True"/>
-                        <Button Content="Browse..." Command="{Binding BrowseQ2ProCommand}" Width="80" Margin="5,0,0,0"/>
+                        <TextBox Text="{Binding Q2ExecutablePath}" Width="250" VerticalContentAlignment="Center" IsReadOnly="True"/>
+                        <Button Content="Browse..." Command="{Binding BrowseQ2ExecutableCommand}" Width="80" Margin="5,0,0,0"/>
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
@@ -72,9 +72,22 @@
                         <TextBlock Text="Max Concurrent Probes:" Width="120" VerticalAlignment="Center"/>
                         <TextBox Text="{Binding MaxConcurrentProbes}" Width="100" VerticalContentAlignment="Center"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                         <TextBlock Text="Probe Timeout (ms):" Width="120" VerticalAlignment="Center"/>
                         <TextBox Text="{Binding ProbeTimeoutMs}" Width="100" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Log Level:" Width="120" VerticalAlignment="Center"/>
+                        <ComboBox SelectedValue="{Binding LogLevel}" SelectedValuePath="Content" Width="100" VerticalContentAlignment="Center">
+                            <ComboBox.Items>
+                                <ComboBoxItem Content="Debug"/>
+                                <ComboBoxItem Content="Info"/>
+                                <ComboBoxItem Content="Warning"/>
+                                <ComboBoxItem Content="Error"/>
+                            </ComboBox.Items>
+                        </ComboBox>
+                        <TextBlock Text="(Controls diagnostic verbosity)" FontStyle="Italic" FontSize="10" Foreground="Gray" 
+                                   VerticalAlignment="Center" Margin="10,0,0,0"/>
                     </StackPanel>
                 </StackPanel>
             </GroupBox>

@@ -53,6 +53,35 @@ public class HttpMasterServerClient : IDisposable
             var data = await response.Content.ReadAsByteArrayAsync(cancellationToken).ConfigureAwait(false);
             _logger?.LogInfo($"Received {data.Length} bytes from HTTP master server");
 
+            // Validate that we got actual data
+            if (data.Length == 0)
+            {
+                _logger?.LogWarning("HTTP master server returned empty response");
+                return servers;
+            }
+
+            // Check if response looks like HTML/text (common for error pages)
+            // HTML typically starts with <html, <HTML, <!DOCTYPE, etc.
+            var dataStart = data.Length >= 10 ? Encoding.ASCII.GetString(data, 0, Math.Min(10, data.Length)) : "";
+            if (dataStart.StartsWith("<html", StringComparison.OrdinalIgnoreCase) ||
+                dataStart.StartsWith("<!DOCTYPE", StringComparison.OrdinalIgnoreCase) ||
+                dataStart.StartsWith("<HTML", StringComparison.OrdinalIgnoreCase))
+            {
+                _logger?.LogError("HTTP master server returned HTML response (likely an error page). Check the URL.");
+                return servers;
+            }
+
+            // Check Content-Type if available
+            if (!string.IsNullOrEmpty(contentType) && 
+                !contentType.Contains("octet-stream", StringComparison.OrdinalIgnoreCase) &&
+                !contentType.Contains("application/", StringComparison.OrdinalIgnoreCase) &&
+                (contentType.Contains("text/", StringComparison.OrdinalIgnoreCase) ||
+                 contentType.Contains("html", StringComparison.OrdinalIgnoreCase)))
+            {
+                _logger?.LogError($"HTTP master server returned unexpected content type: {contentType}. Expected binary data.");
+                return servers;
+            }
+
             // q2servers.com returns binary format directly (6-byte chunks: 4-byte IP + 2-byte port)
             // Check if it starts with text prefix like "+6" (q2pro format) or is pure binary
             if (data.Length > 0 && (data[0] == (byte)'+' || data[0] == (byte)'-'))

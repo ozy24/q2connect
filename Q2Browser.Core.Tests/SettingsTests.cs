@@ -195,11 +195,11 @@ public class SettingsTests
         Assert.True(settings.EnableLanBroadcast);
         Assert.True(settings.RefreshOnStartup);
         Assert.True(settings.PortableMode);
-        Assert.Equal("Info", settings.LogLevel);
+        Assert.Equal("Warning", settings.LogLevel);
         Assert.Equal(75, settings.MaxConcurrentProbes);
         Assert.Equal(3000, settings.ProbeTimeoutMs);
         Assert.Equal(150, settings.UiUpdateIntervalMs);
-        Assert.Empty(settings.Q2ProExecutablePath);
+        Assert.Empty(settings.Q2ExecutablePath);
     }
 }
 

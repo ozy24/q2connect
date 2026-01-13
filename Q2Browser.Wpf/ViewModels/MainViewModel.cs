@@ -39,7 +39,6 @@ public class MainViewModel : INotifyPropertyChanged, IDisposable
     private int _serversFound;
     private CancellationTokenSource? _refreshCancellation;
     private bool _isInitialized;
-    private bool _showDiagnosticsButton;
 
     public MainViewModel()
     {
@@ -66,7 +65,7 @@ public class MainViewModel : INotifyPropertyChanged, IDisposable
         ConnectCommand = new RelayCommand(ConnectToServer, _ => SelectedServer != null);
         ToggleFavoriteCommand = new RelayCommand(async _ => await ToggleFavoriteAsync(), _ => SelectedServer != null);
         OpenSettingsCommand = new RelayCommand(_ => OpenSettings());
-        OpenDiagnosticsCommand = new RelayCommand(_ => OpenDiagnostics());
+        OpenLogCommand = new RelayCommand(_ => OpenLog());
         OpenAboutCommand = new RelayCommand(_ => OpenAbout());
         CopyServerNameCommand = new RelayCommand(CopyServerName, _ => SelectedServer != null);
         CopyIpAddressCommand = new RelayCommand(CopyIpAddress, _ => SelectedServer != null);
@@ -94,10 +93,12 @@ public class MainViewModel : INotifyPropertyChanged, IDisposable
         DiagnosticLogger.Instance.LogInfo("Application initializing...");
         
         _currentSettings = await _favoritesService.LoadSettingsAsync();
+        
+        // Set the minimum log level based on settings
+        DiagnosticLogger.Instance.SetMinimumLogLevel(_currentSettings.LogLevel);
+        
         DiagnosticLogger.Instance.LogInfo($"Loaded settings: Master={_currentSettings.MasterServerAddress}:{_currentSettings.MasterServerPort}");
         
-        // Update diagnostics button visibility based on log level
-        UpdateDiagnosticsButtonVisibility();
         
         _masterServerClient = new MasterServerClient(_currentSettings, logger);
         _httpMasterServerClient = new HttpMasterServerClient(_currentSettings, logger);
@@ -143,6 +144,9 @@ public class MainViewModel : INotifyPropertyChanged, IDisposable
         var logger = new CoreLoggerAdapter();
         _currentSettings = await _favoritesService.LoadSettingsAsync();
         
+        // Update the minimum log level based on settings
+        DiagnosticLogger.Instance.SetMinimumLogLevel(_currentSettings.LogLevel);
+        
         // Dispose old HTTP client before creating new one
         _httpMasterServerClient?.Dispose();
         
@@ -152,15 +156,6 @@ public class MainViewModel : INotifyPropertyChanged, IDisposable
         _gameServerProbe = new GameServerProbe(_currentSettings, logger);
         _launcherService = new LauncherService(_currentSettings);
         
-        // Update diagnostics button visibility
-        UpdateDiagnosticsButtonVisibility();
-    }
-
-    private void UpdateDiagnosticsButtonVisibility()
-    {
-        // Show diagnostics button only if log level is Debug or Info (for troubleshooting)
-        // Hidden by default (when log level is Warning or Error)
-        ShowDiagnosticsButton = _currentSettings.LogLevel == "Debug" || _currentSettings.LogLevel == "Info";
     }
 
     private void OpenSettings()
@@ -176,26 +171,26 @@ public class MainViewModel : INotifyPropertyChanged, IDisposable
         }
     }
 
-    private void OpenDiagnostics()
+    private void OpenLog()
     {
         try
         {
-            DiagnosticLogger.Instance.LogInfo("Opening diagnostic window...");
+            DiagnosticLogger.Instance.LogInfo("Opening log window...");
             
-            var diagnosticWindow = new Views.DiagnosticWindow
+            var logWindow = new Views.LogWindow
             {
                 Owner = System.Windows.Application.Current.MainWindow
             };
             
-            DiagnosticLogger.Instance.LogDebug("Diagnostic window created, showing...");
-            diagnosticWindow.Show();
-            DiagnosticLogger.Instance.LogInfo("Diagnostic window opened successfully");
+            DiagnosticLogger.Instance.LogDebug("Log window created, showing...");
+            logWindow.Show();
+            DiagnosticLogger.Instance.LogInfo("Log window opened successfully");
         }
         catch (Exception ex)
         {
-            DiagnosticLogger.Instance.LogError($"Failed to open diagnostic window: {ex.Message}", ex.ToString());
+            DiagnosticLogger.Instance.LogError($"Failed to open log window: {ex.Message}", ex.ToString());
             System.Windows.MessageBox.Show(
-                $"Error opening diagnostic window:\n\n{ex.Message}\n\nStack trace:\n{ex.StackTrace}",
+                $"Error opening log window:\n\n{ex.Message}\n\nStack trace:\n{ex.StackTrace}",
                 "Error",
                 System.Windows.MessageBoxButton.OK,
                 System.Windows.MessageBoxImage.Error);
@@ -259,19 +254,6 @@ public class MainViewModel : INotifyPropertyChanged, IDisposable
     public string ToggleFavoriteText => SelectedServer?.IsFavorite == true ? "Unfavorite" : "Favorite";
     public string ToggleFavoriteMenuText => SelectedServer?.IsFavorite == true ? "Remove from Favorites" : "Add to Favorites";
 
-    public bool ShowDiagnosticsButton
-    {
-        get => _showDiagnosticsButton;
-        set
-        {
-            if (_showDiagnosticsButton != value)
-            {
-                _showDiagnosticsButton = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
     public ICollectionView Players => _playersView;
 
     public string SearchText
@@ -332,7 +314,7 @@ public class MainViewModel : INotifyPropertyChanged, IDisposable
     public ICommand ConnectCommand { get; }
     public ICommand ToggleFavoriteCommand { get; }
     public ICommand OpenSettingsCommand { get; }
-    public ICommand OpenDiagnosticsCommand { get; }
+    public ICommand OpenLogCommand { get; }
     public ICommand OpenAboutCommand { get; }
     public ICommand CopyServerNameCommand { get; }
     public ICommand CopyIpAddressCommand { get; }
@@ -341,6 +323,7 @@ public class MainViewModel : INotifyPropertyChanged, IDisposable
     private async Task RefreshServersAsync()
     {
         _refreshCancellation?.Cancel();
+        _refreshCancellation?.Dispose();
         _refreshCancellation = new CancellationTokenSource();
 
         DiagnosticLogger.Instance.LogInfo("=== Starting server refresh ===");
@@ -469,7 +452,7 @@ public class MainViewModel : INotifyPropertyChanged, IDisposable
         catch (InvalidOperationException ex)
         {
             System.Windows.MessageBox.Show(
-                $"Cannot connect to server:\n\n{ex.Message}\n\nPlease configure the Q2Pro executable path in Settings.",
+                $"Cannot connect to server:\n\n{ex.Message}\n\nPlease configure the Quake 2 executable path in Settings.",
                 "Configuration Required",
                 System.Windows.MessageBoxButton.OK,
                 System.Windows.MessageBoxImage.Warning);
@@ -477,7 +460,7 @@ public class MainViewModel : INotifyPropertyChanged, IDisposable
         catch (FileNotFoundException ex)
         {
             System.Windows.MessageBox.Show(
-                $"Cannot connect to server:\n\n{ex.Message}\n\nPlease check the Q2Pro executable path in Settings.",
+                $"Cannot connect to server:\n\n{ex.Message}\n\nPlease check the Quake 2 executable path in Settings.",
                 "File Not Found",
                 System.Windows.MessageBoxButton.OK,
                 System.Windows.MessageBoxImage.Error);

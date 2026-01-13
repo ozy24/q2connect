@@ -7,7 +7,8 @@
         xmlns:converters="clr-namespace:Q2Browser.Wpf.Converters"
         mc:Ignorable="d"
         Title="Q2Browser" Height="600" Width="1000"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Icon="pack://application:,,,/icon.ico">
     <Window.Resources>
         <converters:Q2ColorToBrushConverter x:Key="ColorConverter"/>
         <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
@@ -22,27 +23,36 @@
         </Grid.RowDefinitions>
 
         <!-- Toolbar -->
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10" HorizontalAlignment="Left">
-            <Button Content="Refresh" Command="{Binding RefreshCommand}" 
-                    Width="100" Height="30" Margin="0,0,10,0" 
-                    IsEnabled="{Binding IsRefreshing, Converter={StaticResource InverseBooleanConverter}}"/>
-            <Button Content="Connect" Command="{Binding ConnectCommand}" 
-                    Width="100" Height="30" Margin="0,0,10,0"/>
-            <Button Content="{Binding ToggleFavoriteText}" Command="{Binding ToggleFavoriteCommand}" 
-                    Width="100" Height="30" Margin="0,0,10,0"/>
-            <Button Content="Settings" Command="{Binding OpenSettingsCommand}" 
-                    Width="100" Height="30" Margin="0,0,10,0"/>
-            <Button Content="About" Command="{Binding OpenAboutCommand}" 
-                    Width="100" Height="30" Margin="0,0,10,0"/>
-            <Button Content="Diagnostics" Command="{Binding OpenDiagnosticsCommand}" 
-                    Width="100" Height="30" Visibility="{Binding ShowDiagnosticsButton, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-        </StackPanel>
+        <Grid Grid.Row="0" Margin="10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Button Content="Refresh" Command="{Binding RefreshCommand}" 
+                        Width="100" Height="30" Margin="0,0,10,0" 
+                        IsEnabled="{Binding IsRefreshing, Converter={StaticResource InverseBooleanConverter}}"/>
+                <Button Content="Connect" Command="{Binding ConnectCommand}" 
+                        Width="100" Height="30" Margin="0,0,10,0"/>
+                <Button Content="{Binding ToggleFavoriteText}" Command="{Binding ToggleFavoriteCommand}" 
+                        Width="100" Height="30" Margin="0,0,10,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Settings" Command="{Binding OpenSettingsCommand}" 
+                        Width="100" Height="30" Margin="0,0,10,0"/>
+                <Button Content="Log" Command="{Binding OpenLogCommand}" 
+                        Width="100" Height="30" Margin="0,0,10,0"/>
+                <Button Content="About" Command="{Binding OpenAboutCommand}" 
+                        Width="100" Height="30"/>
+            </StackPanel>
+        </Grid>
 
         <!-- Search Box -->
-        <TextBox Grid.Row="1" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" 
-                 Margin="10,5" Height="25" 
-                 VerticalContentAlignment="Center"
-                 Tag="Search servers..."/>
+        <Grid Grid.Row="1" Margin="10,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Filter:" VerticalAlignment="Center" Margin="0,0,8,0"/>
+            <TextBox Grid.Column="1" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" 
+                     Height="25" VerticalContentAlignment="Center"/>
+        </Grid>
 
         <!-- Main Content: Server List and Players -->
         <Grid Grid.Row="2" Margin="10,5">

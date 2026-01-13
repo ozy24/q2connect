@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Q2Browser.Wpf", "Q2Browser.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Q2Browser.Wpf", "Q2Browser.Wpf", "{F571D2C1-0B43-4ADB-BD85-88A530B4EDD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Q2Browser.Core.Tests", "Q2Browser.Wpf\Q2Browser.Core.Tests\Q2Browser.Core.Tests.csproj", "{F9B8FC59-709C-497F-BE22-35658DDCB641}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Q2Browser.Core.Tests", "Q2Browser.Core.Tests\Q2Browser.Core.Tests.csproj", "{F9B8FC59-709C-497F-BE22-35658DDCB641}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +32,5 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B2C3D4E5-F6A7-4B5C-9D0E-1F2A3B4C5D6E} = {F571D2C1-0B43-4ADB-BD85-88A530B4EDD7}
-		{F9B8FC59-709C-497F-BE22-35658DDCB641} = {F571D2C1-0B43-4ADB-BD85-88A530B4EDD7}
 	EndGlobalSection
 EndGlobal

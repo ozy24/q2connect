@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Q2Browser.Core\Q2Browser.Core.csproj" />
+    <ProjectReference Include="..\Q2Browser.Core\Q2Browser.Core.csproj" />
   </ItemGroup>
 
 </Project>

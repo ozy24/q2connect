@@ -7,31 +7,31 @@ using Q2Browser.Wpf.Services;
 
 namespace Q2Browser.Wpf.Views;
 
-    public partial class DiagnosticWindow : Window
+    public partial class LogWindow : Window
     {
-        public DiagnosticWindow()
+        public LogWindow()
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine("DiagnosticWindow: Starting constructor...");
+                System.Diagnostics.Debug.WriteLine("LogWindow: Starting constructor...");
                 
                 InitializeComponent();
-                System.Diagnostics.Debug.WriteLine("DiagnosticWindow: InitializeComponent complete");
+                System.Diagnostics.Debug.WriteLine("LogWindow: InitializeComponent complete");
                 
                 DataContext = DiagnosticLogger.Instance;
-                System.Diagnostics.Debug.WriteLine("DiagnosticWindow: DataContext set");
+                System.Diagnostics.Debug.WriteLine("LogWindow: DataContext set");
                 
-                Loaded += DiagnosticWindow_Loaded;
-                System.Diagnostics.Debug.WriteLine("DiagnosticWindow: Constructor complete");
+                Loaded += LogWindow_Loaded;
+                System.Diagnostics.Debug.WriteLine("LogWindow: Constructor complete");
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"DiagnosticWindow constructor error: {ex}");
+                System.Diagnostics.Debug.WriteLine($"LogWindow constructor error: {ex}");
                 System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
                 
                 try
                 {
-                    DiagnosticLogger.Instance.LogError($"DiagnosticWindow constructor failed: {ex.Message}", ex.ToString());
+                    DiagnosticLogger.Instance.LogError($"LogWindow constructor failed: {ex.Message}", ex.ToString());
                 }
                 catch
                 {
@@ -42,33 +42,33 @@ namespace Q2Browser.Wpf.Views;
             }
         }
 
-        private void DiagnosticWindow_Loaded(object sender, RoutedEventArgs e)
+        private void LogWindow_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine("DiagnosticWindow: Loaded event fired");
+                System.Diagnostics.Debug.WriteLine("LogWindow: Loaded event fired");
                 
                 // Auto-scroll to bottom when new entries are added
                 DiagnosticLogger.Instance.LogEntries.CollectionChanged += LogEntries_CollectionChanged;
-                System.Diagnostics.Debug.WriteLine("DiagnosticWindow: CollectionChanged handler attached");
+                System.Diagnostics.Debug.WriteLine("LogWindow: CollectionChanged handler attached");
                 
                 // Scroll to bottom on initial load
                 if (LogDataGrid != null && LogDataGrid.Items.Count > 0)
                 {
                     LogDataGrid.ScrollIntoView(LogDataGrid.Items[LogDataGrid.Items.Count - 1]);
-                    System.Diagnostics.Debug.WriteLine("DiagnosticWindow: Scrolled to bottom");
+                    System.Diagnostics.Debug.WriteLine("LogWindow: Scrolled to bottom");
                 }
                 
-                System.Diagnostics.Debug.WriteLine("DiagnosticWindow: Loaded event complete");
+                System.Diagnostics.Debug.WriteLine("LogWindow: Loaded event complete");
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"DiagnosticWindow_Loaded error: {ex}");
+                System.Diagnostics.Debug.WriteLine($"LogWindow_Loaded error: {ex}");
                 System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
                 
                 try
                 {
-                    DiagnosticLogger.Instance.LogError($"DiagnosticWindow Loaded failed: {ex.Message}", ex.ToString());
+                    DiagnosticLogger.Instance.LogError($"LogWindow Loaded failed: {ex.Message}", ex.ToString());
                 }
                 catch
                 {

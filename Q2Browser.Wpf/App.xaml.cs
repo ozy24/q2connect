@@ -40,7 +40,7 @@ public partial class App : Application
         try
         {
             MessageBox.Show(
-                $"An unhandled error occurred:\n\n{exception?.Message ?? "Unknown error"}\n\nCheck the Diagnostics window for details.",
+                $"An unhandled error occurred:\n\n{exception?.Message ?? "Unknown error"}\n\nCheck the Log window for details.",
                 "Application Error",
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
@@ -58,7 +58,7 @@ public partial class App : Application
         try
         {
             var result = MessageBox.Show(
-                $"An error occurred:\n\n{e.Exception.Message}\n\nCheck the Diagnostics window for details.\n\nDo you want to continue?",
+                $"An error occurred:\n\n{e.Exception.Message}\n\nCheck the Log window for details.\n\nDo you want to continue?",
                 "Application Error",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Error);

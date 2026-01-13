@@ -10,6 +10,7 @@ public class DiagnosticLogger
     private static DiagnosticLogger? _instance;
     private readonly ObservableCollection<LogEntry> _logEntries = new();
     private readonly object _lockObject = new();
+    private LogLevel _minimumLogLevel = LogLevel.Warning;
 
     public static DiagnosticLogger Instance
     {
@@ -29,8 +30,38 @@ public class DiagnosticLogger
 
     public ObservableCollection<LogEntry> LogEntries => _logEntries;
 
+    /// <summary>
+    /// Sets the minimum log level from a string value (Debug, Info, Warning, Error).
+    /// Defaults to Warning if the string is invalid.
+    /// </summary>
+    public void SetMinimumLogLevel(string logLevel)
+    {
+        _minimumLogLevel = logLevel?.ToLowerInvariant() switch
+        {
+            "debug" => LogLevel.Debug,
+            "info" => LogLevel.Info,
+            "warning" => LogLevel.Warning,
+            "error" => LogLevel.Error,
+            _ => LogLevel.Warning
+        };
+    }
+
+    /// <summary>
+    /// Checks if a log level should be logged based on the current minimum log level.
+    /// </summary>
+    private bool ShouldLog(LogLevel level)
+    {
+        return level >= _minimumLogLevel;
+    }
+
     public void Log(LogLevel level, string message, string? details = null)
     {
+        // Filter based on minimum log level
+        if (!ShouldLog(level))
+        {
+            return;
+        }
+
         var entry = new LogEntry
         {
             Timestamp = DateTime.Now,

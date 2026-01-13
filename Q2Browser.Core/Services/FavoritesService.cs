@@ -52,7 +52,7 @@ public class FavoritesService
         
         // AppData mode (fallback or explicit)
         var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        var configDir = Path.Combine(appDataPath, "Q2ServerBrowser");
+        var configDir = Path.Combine(appDataPath, "Q2Browser");
         Directory.CreateDirectory(configDir);
         _favoritesPath = Path.Combine(configDir, "favorites.json");
         _settingsPath = Path.Combine(configDir, "settings.json");
@@ -185,7 +185,7 @@ public class FavoritesService
     private static string GetAppDataSettingsPath()
     {
         var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        var configDir = Path.Combine(appDataPath, "Q2ServerBrowser");
+        var configDir = Path.Combine(appDataPath, "Q2Browser");
         return Path.Combine(configDir, "settings.json");
     }
 

@@ -44,7 +44,7 @@ public class Settings
     public bool EnableLanBroadcast { get; set; } = true;
     public bool RefreshOnStartup { get; set; } = true;
     public bool PortableMode { get; set; } = true;
-    public string LogLevel { get; set; } = "Info";
+    public string LogLevel { get; set; } = "Warning";
 
     public int MaxConcurrentProbes
     {
@@ -62,7 +62,7 @@ public class Settings
             : throw new ArgumentOutOfRangeException(nameof(value), "ProbeTimeoutMs must be between 1 and 60000");
     }
 
-    public string Q2ProExecutablePath { get; set; } = string.Empty;
+    public string Q2ExecutablePath { get; set; } = string.Empty;
 
     public int UiUpdateIntervalMs
     {

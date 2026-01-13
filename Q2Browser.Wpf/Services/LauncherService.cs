@@ -18,24 +18,24 @@ public class LauncherService
 
     public void LaunchGame(ServerEntry server)
     {
-        if (string.IsNullOrEmpty(_settings.Q2ProExecutablePath))
+        if (string.IsNullOrEmpty(_settings.Q2ExecutablePath))
         {
-            throw new InvalidOperationException("Q2Pro executable path is not configured");
+            throw new InvalidOperationException("Quake 2 executable path is not configured");
         }
 
-        if (!File.Exists(_settings.Q2ProExecutablePath))
+        if (!File.Exists(_settings.Q2ExecutablePath))
         {
-            throw new FileNotFoundException($"Q2Pro executable not found: {_settings.Q2ProExecutablePath}");
+            throw new FileNotFoundException($"Quake 2 executable not found: {_settings.Q2ExecutablePath}");
         }
 
         var arguments = $"+connect {server.Address}:{server.Port}";
 
         var startInfo = new ProcessStartInfo
         {
-            FileName = _settings.Q2ProExecutablePath,
+            FileName = _settings.Q2ExecutablePath,
             Arguments = arguments,
             UseShellExecute = false,
-            WorkingDirectory = Path.GetDirectoryName(_settings.Q2ProExecutablePath)
+            WorkingDirectory = Path.GetDirectoryName(_settings.Q2ExecutablePath)
         };
 
         Process.Start(startInfo);
