@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Q2Browser.Wpf")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c0a12acdfb675f1d29fa63cc835adee4a8efdced")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f7c44a115cda9bcdb3bcca365618e5cadacfe674")]
 [assembly: System.Reflection.AssemblyProductAttribute("Q2Browser.Wpf")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Q2Browser.Wpf")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

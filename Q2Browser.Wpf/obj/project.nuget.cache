@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "4pG1DEf50F8=",
+  "dgSpecHash": "3F1DmnqUTmA=",
   "success": true,
   "projectFilePath": "E:\\Projects\\q2-server-browser\\Q2Browser.Wpf\\Q2Browser.Wpf.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\chris\\.nuget\\packages\\darknet\\2.3.0\\darknet.2.3.0.nupkg.sha512",
+    "C:\\Users\\chris\\.nuget\\packages\\modernwpfui\\0.9.6\\modernwpfui.0.9.6.nupkg.sha512"
+  ],
   "logs": []
 }
