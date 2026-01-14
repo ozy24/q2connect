@@ -1,6 +1,6 @@
 # Q2Browser
 
-A high-performance, native Windows desktop application to browse Quake II multiplayer servers (original Quake 2, not re-release). Built with .NET 8 and WPF.
+A high-performance, native Windows desktop application to browse Quake II multiplayer servers (original Quake 2, not re-release). Built with .NET 10 and WPF, featuring native dark theme support.
 
 **Author:** ozy  
 **Repository:** https://github.com/ozy24/q2browser
@@ -13,6 +13,7 @@ A high-performance, native Windows desktop application to browse Quake II multip
 - ✅ Search and filter servers
 - ✅ Favorites persistence
 - ✅ Direct launch Quake 2 executable with server connection
+- ✅ Native dark theme support (follows system theme)
 
 ---
 
@@ -70,7 +71,7 @@ Settings and favorites are stored in different locations depending on the **Port
 
 ### Prerequisites
 
-- **.NET 8 SDK** - Download from [https://dotnet.microsoft.com/download/dotnet/8.0](https://dotnet.microsoft.com/download/dotnet/8.0)
+- **.NET 10 SDK** - Download from [https://dotnet.microsoft.com/download/dotnet/10.0](https://dotnet.microsoft.com/download/dotnet/10.0)
 - **Windows 10/11** (x64)
 - **Visual Studio Code** with the **C# extension** (ms-dotnettools.csharp) - optional, any IDE with .NET support works
 
@@ -156,7 +157,7 @@ Q2Browser.sln
 
 ### Troubleshooting Build Issues
 
-- **Missing .NET 8 SDK**: Ensure you have .NET 8 SDK installed (`dotnet --version` should show 8.x)
+- **Missing .NET 10 SDK**: Ensure you have .NET 10 SDK installed (`dotnet --version` should show 10.x)
 - **NuGet restore fails**: Try `dotnet nuget locals all --clear` then `dotnet restore`
 
 ---

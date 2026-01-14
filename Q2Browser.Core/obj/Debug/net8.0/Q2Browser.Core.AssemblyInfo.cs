@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Q2Browser.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f7c44a115cda9bcdb3bcca365618e5cadacfe674")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aceef898100a4e9ada3c5c436a7e940d799488f3")]
 [assembly: System.Reflection.AssemblyProductAttribute("Q2Browser.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Q2Browser.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
