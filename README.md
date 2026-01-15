@@ -1,4 +1,4 @@
-# Q2Browser
+# Q2Connect
 
 A high-performance, native Windows desktop application to browse Quake II multiplayer servers (original Quake 2, not re-release). Built with .NET 10 and WPF, featuring native system theme support (automatically follows Windows dark/light theme).
 
@@ -27,7 +27,7 @@ A high-performance, native Windows desktop application to browse Quake II multip
 ### Installation & Running
 
 1. **Download and extract** the application files
-2. **Run Q2Browser.exe** (or use `dotnet run --project Q2Browser.Wpf/Q2Browser.Wpf.csproj` if running from source)
+2. **Run Q2Connect.exe** (or use `dotnet run --project Q2Connect.Wpf/Q2Connect.Wpf.csproj` if running from source)
 
 ### Getting Started
 
@@ -50,8 +50,8 @@ Settings and favorites are stored in different locations depending on the **Port
 - Favorites: `favorites.json` in the same directory as the executable
 
 **AppData Mode (Portable Mode Disabled):**
-- Settings: `%AppData%\Q2Browser\settings.json`
-- Favorites: `%AppData%\Q2Browser\favorites.json`
+- Settings: `%AppData%\Q2Connect\settings.json`
+- Favorites: `%AppData%\Q2Connect\favorites.json`
 
 **Notes:**
 - Portable mode is enabled by default, making it easy to keep all application data with the executable
@@ -101,12 +101,12 @@ Settings and favorites are stored in different locations depending on the **Port
 
    Or build a specific project:
    ```bash
-   dotnet build Q2Browser.Wpf/Q2Browser.Wpf.csproj
+   dotnet build Q2Connect.Wpf/Q2Connect.Wpf.csproj
    ```
 
 5. **Run the application**:
    ```bash
-   dotnet run --project Q2Browser.Wpf/Q2Browser.Wpf.csproj
+   dotnet run --project Q2Connect.Wpf/Q2Connect.Wpf.csproj
    ```
 
 #### Using Command Line
@@ -118,10 +118,10 @@ Open PowerShell or Command Prompt in the project root and run:
 dotnet restore
 
 # Build the entire solution
-dotnet build Q2Browser.sln
+dotnet build Q2Connect.sln
 
 # Run the WPF application
-dotnet run --project Q2Browser.Wpf/Q2Browser.Wpf.csproj
+dotnet run --project Q2Connect.Wpf/Q2Connect.Wpf.csproj
 ```
 
 #### Publishing for Release
@@ -133,7 +133,7 @@ To create a distributable single-file executable:
 .\publish.bat
 
 # Or manually
-dotnet publish Q2Browser.Wpf/Q2Browser.Wpf.csproj --configuration Release --output "publish" --self-contained true --runtime win-x64 -p:PublishSingleFile=true
+dotnet publish Q2Connect.Wpf/Q2Connect.Wpf.csproj --configuration Release --output "publish" --self-contained true --runtime win-x64 -p:PublishSingleFile=true
 ```
 
 The published executable will be in the `publish` folder. This creates a self-contained, single-file executable that includes the .NET runtime and can be distributed without requiring .NET to be installed on the target machine.
@@ -141,20 +141,20 @@ The published executable will be in the `publish` folder. This creates a self-co
 ### Project Structure
 
 ```
-Q2Browser.sln
-├── Q2Browser.Core/          # Core library (no WPF dependencies)
+Q2Connect.sln
+├── Q2Connect.Core/          # Core library (no WPF dependencies)
 │   ├── Models/              # ServerEntry, Settings
 │   ├── Networking/          # MasterServerClient, GameServerProbe
 │   ├── Protocol/           # PacketHeader, Q2ColorParser, ByteReader
 │   └── Services/           # FavoritesService
 │
-├── Q2Browser.Wpf/          # WPF application
+├── Q2Connect.Wpf/          # WPF application
 │   ├── ViewModels/         # MainViewModel, ServerRowViewModel
 │   ├── Views/             # MainWindow.xaml
 │   ├── Converters/        # Q2ColorToBrushConverter
 │   └── Services/          # LauncherService
 │
-└── Q2Browser.Core.Tests/   # Unit tests
+└── Q2Connect.Core.Tests/   # Unit tests
     ├── UrlValidatorTests.cs
     ├── PacketHeaderTests.cs
     ├── ByteReaderTests.cs
@@ -163,7 +163,7 @@ Q2Browser.sln
 
 ### Development Notes
 
-- The Core library (`Q2Browser.Core`) has no WPF dependencies, making it portable for future cross-platform migrations
+- The Core library (`Q2Connect.Core`) has no WPF dependencies, making it portable for future cross-platform migrations
 - Server probing is throttled to 75 concurrent requests by default to prevent router packet loss
 - UI updates are batched every 150ms to prevent thread saturation
 - All networking operations are fully async and non-blocking

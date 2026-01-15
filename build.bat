@@ -1,6 +1,6 @@
 @echo off
-echo Building Q2Browser solution...
-dotnet build Q2Browser.sln
+echo Building Q2Connect solution...
+dotnet build Q2Connect.sln
 if %ERRORLEVEL% EQU 0 (
     echo.
     echo Build completed successfully!
@@ -9,6 +9,7 @@ if %ERRORLEVEL% EQU 0 (
     echo Build failed with error code %ERRORLEVEL%
     exit /b %ERRORLEVEL%
 )
+
 
 
 

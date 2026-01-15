@@ -1,5 +1,5 @@
 @echo off
-echo Publishing Q2Browser for release...
+echo Publishing Q2Connect for release...
 echo.
 
 REM Create publish directory
@@ -11,8 +11,8 @@ if exist "publish\*" (
 )
 
 echo.
-echo Building and publishing Q2Browser.Wpf...
-dotnet publish Q2Browser.Wpf/Q2Browser.Wpf.csproj ^
+echo Building and publishing Q2Connect.Wpf...
+dotnet publish Q2Connect.Wpf/Q2Connect.Wpf.csproj ^
     --configuration Release ^
     --output "publish" ^
     --self-contained true ^
@@ -30,7 +30,7 @@ if %ERRORLEVEL% EQU 0 (
     echo Output location: %CD%\publish
     echo.
     echo The application is ready for distribution.
-    echo You can find Q2Browser.Wpf.exe in the publish folder.
+    echo You can find Q2Connect.Wpf.exe in the publish folder.
     echo.
 ) else (
     echo.
@@ -39,5 +39,6 @@ if %ERRORLEVEL% EQU 0 (
     echo ========================================
     exit /b %ERRORLEVEL%
 )
+
 
 
