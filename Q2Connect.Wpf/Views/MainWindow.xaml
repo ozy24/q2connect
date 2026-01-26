@@ -24,26 +24,55 @@
         <!-- Toolbar -->
         <Grid Grid.Row="0" Margin="10">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <Button Content="Refresh" Command="{Binding RefreshCommand}" 
-                        Width="100" Height="30" Margin="0,0,10,0" 
-                        IsEnabled="{Binding IsRefreshing, Converter={StaticResource InverseBooleanConverter}}"/>
-                <Button Content="Connect" Command="{Binding ConnectCommand}" 
-                        Width="100" Height="30" Margin="0,0,10,0"/>
-                <Button Content="{Binding ToggleFavoriteText}" Command="{Binding ToggleFavoriteCommand}" 
-                        Width="100" Height="30" Margin="0,0,10,0"/>
+                <Button Command="{Binding RefreshCommand}" 
+                        Width="100" Height="32" Margin="0,0,10,0" 
+                        IsEnabled="{Binding IsRefreshing, Converter={StaticResource InverseBooleanConverter}}">
+                    <AccessText Text="_Refresh"/>
+                </Button>
+                <Button Command="{Binding ConnectCommand}" 
+                        Width="100" Height="32" Margin="0,0,10,0">
+                    <AccessText Text="_Connect"/>
+                </Button>
+                <Button Command="{Binding ToggleFavoriteCommand}" 
+                        Width="100" Height="32" Margin="0,0,10,0">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <AccessText Text="_Favorite"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedServer.IsFavorite}" Value="True">
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <AccessText Text="_Unfavorite"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="Settings" Command="{Binding OpenSettingsCommand}" 
-                        Width="100" Height="30" Margin="0,0,10,0"/>
-                <Button Content="Log" Command="{Binding OpenLogCommand}" 
-                        Width="100" Height="30" Margin="0,0,10,0"/>
-                <Button Content="About" Command="{Binding OpenAboutCommand}" 
-                        Width="100" Height="30"/>
+                <Button Command="{Binding OpenSettingsCommand}" 
+                        Width="100" Height="32" Margin="0,0,10,0">
+                    <AccessText Text="_Settings"/>
+                </Button>
+                <Button Command="{Binding OpenLogCommand}" 
+                        Width="100" Height="32" Margin="0,0,10,0">
+                    <AccessText Text="_Log"/>
+                </Button>
+                <Button Command="{Binding OpenAboutCommand}" 
+                        Width="100" Height="32">
+                    <AccessText Text="_About"/>
+                </Button>
             </StackPanel>
         </Grid>
 
         <!-- Tab Control -->
-        <TabControl Grid.Row="1" Margin="10,5" SelectedIndex="{Binding SelectedTabIndex}">
+        <TabControl Grid.Row="1" Margin="10,5" SelectedIndex="{Binding SelectedTabIndex}" PreviewKeyDown="TabControl_PreviewKeyDown">
             <!-- Public Servers Tab -->
             <TabItem Header="Public Servers">
                 <Grid>
@@ -65,7 +94,7 @@
                         <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
                             <CheckBox IsChecked="{Binding IncludePlayerNamesInSearch}" 
                                       VerticalAlignment="Center" 
-                                      Margin="0,0,5,0"/>
+                                      Margin="0,0,0,0"/>
                             <TextBlock Text="Include player names" 
                                        VerticalAlignment="Center"/>
                         </StackPanel>
@@ -93,6 +122,7 @@
                       VirtualizingPanel.VirtualizationMode="Recycling"
                       MouseDoubleClick="DataGrid_MouseDoubleClick"
                       PreviewMouseLeftButtonDown="DataGrid_PreviewMouseLeftButtonDown"
+                      PreviewKeyDown="DataGrid_PreviewKeyDown"
                       TextElement.FontSize="12">
                 <DataGrid.ContextMenu>
                     <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
@@ -184,7 +214,7 @@
             </DataGrid>
 
             <!-- Splitter -->
-            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"/>
 
             <!-- Players List -->
             <DataGrid Grid.Column="2"
@@ -203,29 +233,33 @@
                     </Style>
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Frags" Binding="{Binding Score}" Width="50">
+                    <DataGridTextColumn Header="Frags" Binding="{Binding Score}" Width="52">
                         <DataGridTextColumn.HeaderStyle>
                             <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
-                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                <Setter Property="Padding" Value="8,0,0,0"/>
                             </Style>
                         </DataGridTextColumn.HeaderStyle>
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Left"/>
                                 <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="Margin" Value="8,0,0,0"/>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="Ping" Binding="{Binding Ping}" Width="50">
                         <DataGridTextColumn.HeaderStyle>
                             <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
-                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                <Setter Property="Padding" Value="8,0,0,0"/>
                             </Style>
                         </DataGridTextColumn.HeaderStyle>
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Left"/>
                                 <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="Margin" Value="8,0,0,0"/>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
@@ -274,7 +308,7 @@
                         <TextBox Grid.Column="3" Text="{Binding AddressBookViewModel.NewLabel}" 
                                  Height="25" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,10,0"/>
                         <Button Grid.Column="4" Content="Add" Command="{Binding AddressBookViewModel.AddCommand}" 
-                                Width="80" Height="25" VerticalAlignment="Center"/>
+                                Width="80" Height="32" VerticalAlignment="Center"/>
                     </Grid>
 
                     <!-- Address Book List -->

@@ -15,7 +15,7 @@ public partial class AboutWindow : Window
 
     private void LoadVersion()
     {
-        VersionTextBlock.Text = "Q2Connect v1.0.0";
+        VersionTextBlock.Text = "Q2Connect v1.1.0";
     }
 
     private void CloseButton_Click(object sender, RoutedEventArgs e)

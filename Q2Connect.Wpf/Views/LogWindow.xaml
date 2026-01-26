@@ -15,9 +15,9 @@
 
         <!-- Toolbar -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10" HorizontalAlignment="Left">
-            <Button Content="Clear Log" Click="ClearButton_Click" Width="100" Height="30" Margin="0,0,10,0"/>
-            <Button Content="Copy to Clipboard" Click="CopyButton_Click" Width="130" Height="30" Margin="0,0,10,0"/>
-            <Button Content="Save to File" Click="SaveButton_Click" Width="100" Height="30"/>
+            <Button Content="Clear Log" Click="ClearButton_Click" Width="100" Height="32" Margin="0,0,10,0"/>
+            <Button Content="Copy to Clipboard" Click="CopyButton_Click" Width="145" Height="32" Margin="0,0,10,0"/>
+            <Button Content="Save to File" Click="SaveButton_Click" Width="100" Height="32"/>
         </StackPanel>
 
         <!-- Log List -->

@@ -189,4 +189,7 @@ $RECYCLE.BIN/
 # Q2Browser user data files
 settings.json
 favorites.json
+addressbook.json
 
+# Distribution folder
+dist/

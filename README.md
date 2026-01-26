@@ -60,6 +60,18 @@ A high-performance, native Windows desktop application to browse Quake II multip
    - **Connect**: Double-click an entry or select it and click "Connect" to launch Quake 2
    - **Add from server list**: Select a server from the server list and use "Add to Address Book" (right-click menu or button)
 
+### Keyboard Shortcuts
+
+- **Alt+R** - Refresh server list
+- **Alt+C** - Connect to selected server
+- **Alt+F** - Add selected server to favorites (when not favorited)
+- **Alt+U** - Remove selected server from favorites (when favorited)
+- **Alt+S** - Open Settings window
+- **Alt+L** - Open Log window
+- **Alt+A** - Open About window
+- **Enter/Return** - Connect to selected server (when server list has focus)
+- **Tab** - Cycle between "Public Servers" and "Address Book" tabs
+
 ### Settings
 
 Settings and favorites are stored in different locations depending on the **Portable Mode** setting:

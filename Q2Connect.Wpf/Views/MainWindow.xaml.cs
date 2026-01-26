@@ -60,5 +60,24 @@ public partial class MainWindow : Window
             viewModel.AddressBookViewModel.ConnectCommand.Execute(null);
         }
     }
+
+    private void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if ((e.Key == Key.Enter || e.Key == Key.Return) && DataContext is MainViewModel viewModel && viewModel.SelectedServer != null)
+        {
+            viewModel.ConnectCommand.Execute(null);
+            e.Handled = true;
+        }
+    }
+
+    private void TabControl_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Tab && DataContext is MainViewModel viewModel)
+        {
+            // Cycle between tabs: 0 = Public Servers, 1 = Address Book
+            viewModel.SelectedTabIndex = viewModel.SelectedTabIndex == 0 ? 1 : 0;
+            e.Handled = true;
+        }
+    }
 }
 

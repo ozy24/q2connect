@@ -5,109 +5,106 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:Q2Connect.Wpf.Converters"
         mc:Ignorable="d"
-        Title="Settings" Height="730" Width="550"
+        Title="Settings" Height="600" Width="550"
         WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize">
+        ResizeMode="CanResize">
     <Window.Resources>
         <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
     </Window.Resources>
-    <Grid Margin="20">
+    <Grid Margin="15" TextElement.FontSize="12">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Title -->
-        <TextBlock Grid.Row="0" Text="Configuration" FontSize="18" FontWeight="Bold" Margin="0,0,0,20"/>
+        <!-- Settings Content - Scrollable -->
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Padding="0,0,0,10">
+            <StackPanel>
+                <!-- Master Server Settings -->
+                <GroupBox Header="Master Server" Margin="0,0,0,10">
+                    <StackPanel Margin="8">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                            <CheckBox IsChecked="{Binding UseHttpMasterServer}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBlock Text="Use HTTP Master Server" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8" IsEnabled="{Binding UseHttpMasterServer}">
+                            <TextBlock Text="HTTP URL:" Width="100" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding HttpMasterServerUrl}" Width="350" VerticalContentAlignment="Center"/>
+                        </StackPanel>
+                        <TextBlock Text="UDP Master Server (used if HTTP is disabled):" Margin="0,5,0,5" FontWeight="Bold"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                            <TextBlock Text="Address:" Width="100" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding MasterServerAddress}" Width="250" VerticalContentAlignment="Center" IsEnabled="{Binding UseHttpMasterServer, Converter={StaticResource InverseBooleanConverter}}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                            <TextBlock Text="Port:" Width="100" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding MasterServerPort}" Width="100" VerticalContentAlignment="Center" IsEnabled="{Binding UseHttpMasterServer, Converter={StaticResource InverseBooleanConverter}}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <CheckBox IsChecked="{Binding EnableLanBroadcast}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBlock Text="Enable LAN Broadcast Discovery" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
 
-        <!-- Settings Content -->
-        <StackPanel Grid.Row="1">
-            <!-- Master Server Settings -->
-            <GroupBox Header="Master Server" Margin="0,0,0,15">
-                <StackPanel Margin="10">
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                        <CheckBox IsChecked="{Binding UseHttpMasterServer}" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <TextBlock Text="Use HTTP Master Server" VerticalAlignment="Center"/>
+                <!-- Options -->
+                <GroupBox Header="Options" Margin="0,0,0,10">
+                    <StackPanel Margin="8">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                            <CheckBox IsChecked="{Binding PortableMode}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBlock Text="Portable mode (store settings in application directory)" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <TextBlock Text="When enabled, settings and favorites are stored alongside the executable. When disabled, they are stored in AppData." 
+                                   FontStyle="Italic" FontSize="10" Margin="0,0,0,8" TextWrapping="Wrap"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <CheckBox IsChecked="{Binding RefreshOnStartup}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBlock Text="Refresh servers on startup" VerticalAlignment="Center"/>
+                        </StackPanel>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10" IsEnabled="{Binding UseHttpMasterServer}">
-                        <TextBlock Text="HTTP URL:" Width="120" VerticalAlignment="Center"/>
-                        <TextBox Text="{Binding HttpMasterServerUrl}" Width="350" VerticalContentAlignment="Center"/>
-                    </StackPanel>
-                    <TextBlock Text="UDP Master Server (used if HTTP is disabled):" Margin="0,5,0,5" FontWeight="Bold"/>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                        <TextBlock Text="Address:" Width="120" VerticalAlignment="Center"/>
-                        <TextBox Text="{Binding MasterServerAddress}" Width="250" VerticalContentAlignment="Center" IsEnabled="{Binding UseHttpMasterServer, Converter={StaticResource InverseBooleanConverter}}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                        <TextBlock Text="Port:" Width="120" VerticalAlignment="Center"/>
-                        <TextBox Text="{Binding MasterServerPort}" Width="100" VerticalContentAlignment="Center" IsEnabled="{Binding UseHttpMasterServer, Converter={StaticResource InverseBooleanConverter}}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                        <CheckBox IsChecked="{Binding EnableLanBroadcast}" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <TextBlock Text="Enable LAN Broadcast Discovery" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </StackPanel>
-            </GroupBox>
+                </GroupBox>
 
-            <!-- Options -->
-            <GroupBox Header="Options" Margin="0,0,0,15">
-                <StackPanel Margin="10">
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                        <CheckBox IsChecked="{Binding PortableMode}" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <TextBlock Text="Portable mode (store settings in application directory)" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                <!-- Quake 2 Executable Settings -->
+                <GroupBox Header="Quake 2 Executable (quake2.exe, q2pro.exe, r1q2.exe)" Margin="0,0,0,10">
+                    <StackPanel Margin="8">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Path:" Width="100" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding Q2ExecutablePath}" Width="250" VerticalContentAlignment="Center" IsReadOnly="True"/>
+                            <Button Content="Browse..." Command="{Binding BrowseQ2ExecutableCommand}" Width="80" Margin="5,0,0,0"/>
+                        </StackPanel>
                     </StackPanel>
-                    <TextBlock Text="When enabled, settings and favorites are stored alongside the executable. When disabled, they are stored in AppData." 
-                               FontStyle="Italic" FontSize="10" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Margin="0,0,0,10" TextWrapping="Wrap"/>
-                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                        <CheckBox IsChecked="{Binding RefreshOnStartup}" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <TextBlock Text="Refresh servers on startup" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </StackPanel>
-            </GroupBox>
+                </GroupBox>
 
-            <!-- Quake 2 Executable Settings -->
-            <GroupBox Header="Quake 2 Executable (quake2.exe, q2pro.exe, r1q2.exe)" Margin="0,0,0,15">
-                <StackPanel Margin="10">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Path:" Width="120" VerticalAlignment="Center"/>
-                        <TextBox Text="{Binding Q2ExecutablePath}" Width="250" VerticalContentAlignment="Center" IsReadOnly="True"/>
-                        <Button Content="Browse..." Command="{Binding BrowseQ2ExecutableCommand}" Width="80" Margin="5,0,0,0"/>
+                <!-- Advanced Settings -->
+                <GroupBox Header="Advanced">
+                    <StackPanel Margin="8">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                            <TextBlock Text="Max Concurrent Probes:" Width="140" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding MaxConcurrentProbes}" Width="100" VerticalContentAlignment="Center" Margin="5,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                            <TextBlock Text="Probe Timeout (ms):" Width="140" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding ProbeTimeoutMs}" Width="100" VerticalContentAlignment="Center" Margin="5,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Log Level:" Width="140" VerticalAlignment="Center"/>
+                            <ComboBox SelectedValue="{Binding LogLevel}" SelectedValuePath="Content" Width="100" VerticalContentAlignment="Center" Margin="5,0,0,0">
+                                <ComboBox.Items>
+                                    <ComboBoxItem Content="Debug"/>
+                                    <ComboBoxItem Content="Info"/>
+                                    <ComboBoxItem Content="Warning"/>
+                                    <ComboBoxItem Content="Error"/>
+                                </ComboBox.Items>
+                            </ComboBox>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-            </GroupBox>
-
-            <!-- Advanced Settings -->
-            <GroupBox Header="Advanced">
-                <StackPanel Margin="10">
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                        <TextBlock Text="Max Concurrent Probes:" Width="150" VerticalAlignment="Center"/>
-                        <TextBox Text="{Binding MaxConcurrentProbes}" Width="100" VerticalContentAlignment="Center" Margin="5,0,0,0"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                        <TextBlock Text="Probe Timeout (ms):" Width="150" VerticalAlignment="Center"/>
-                        <TextBox Text="{Binding ProbeTimeoutMs}" Width="100" VerticalContentAlignment="Center" Margin="5,0,0,0"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Log Level:" Width="150" VerticalAlignment="Center"/>
-                        <ComboBox SelectedValue="{Binding LogLevel}" SelectedValuePath="Content" Width="100" VerticalContentAlignment="Center" Margin="5,0,0,0">
-                            <ComboBox.Items>
-                                <ComboBoxItem Content="Debug"/>
-                                <ComboBoxItem Content="Info"/>
-                                <ComboBoxItem Content="Warning"/>
-                                <ComboBoxItem Content="Error"/>
-                            </ComboBox.Items>
-                        </ComboBox>
-                    </StackPanel>
-                </StackPanel>
-            </GroupBox>
-        </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
 
         <!-- Buttons -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
             <Button Content="Save" Command="{Binding SaveCommand}" Width="80" Height="30" IsDefault="True" Click="SaveButton_Click" Margin="0,0,10,0"/>
             <Button Content="Cancel" Command="{Binding CancelCommand}" Width="80" Height="30" IsCancel="True" Click="CancelButton_Click"/>
         </StackPanel>
     </Grid>
 </Window>
-
