@@ -191,5 +191,9 @@ settings.json
 favorites.json
 addressbook.json
 
-# Distribution folder
+# Distribution and publish folders (large executables exceed GitHub limit)
 dist/
+dist-temp-test/
+dist-temp-self-contained/
+dist-temp-framework-dependent/
+publish/
