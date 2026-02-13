@@ -46,7 +46,7 @@ if %ERRORLEVEL% EQU 0 (
     echo Output location: %CD%\dist
     echo.
     echo Distribution files:
-    echo   - Q2Connect.Wpf.exe (main executable)
+    echo   - q2connect.exe (main executable)
     echo   - README.md
     echo.
     echo The application is ready for distribution.

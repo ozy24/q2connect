@@ -20,8 +20,21 @@
         <!-- Settings Content - Scrollable -->
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Padding="0,0,0,10">
             <StackPanel>
+                <!-- Quake 2 Executable Settings -->
+                <GroupBox Header="Quake 2 Executable (quake2.exe, q2pro.exe, r1q2.exe)" Margin="0,0,0,0">
+                    <StackPanel Margin="8">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Path:" Width="100" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding Q2ExecutablePath}" Width="250" VerticalContentAlignment="Center" IsReadOnly="True"/>
+                            <Button Content="Browse..." Command="{Binding BrowseQ2ExecutableCommand}" Width="80" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <Separator Margin="0,3,0,3"/>
+
                 <!-- Master Server Settings -->
-                <GroupBox Header="Master Server" Margin="0,0,0,10">
+                <GroupBox Header="Master Server" Margin="0,0,0,0">
                     <StackPanel Margin="8">
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                             <CheckBox IsChecked="{Binding UseHttpMasterServer}" VerticalAlignment="Center" Margin="0,0,5,0"/>
@@ -47,8 +60,10 @@
                     </StackPanel>
                 </GroupBox>
 
+                <Separator Margin="0,6,0,6"/>
+
                 <!-- Options -->
-                <GroupBox Header="Options" Margin="0,0,0,10">
+                <GroupBox Header="Options" Margin="0,0,0,0">
                     <StackPanel Margin="8">
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                             <CheckBox IsChecked="{Binding PortableMode}" VerticalAlignment="Center" Margin="0,0,5,0"/>
@@ -63,19 +78,10 @@
                     </StackPanel>
                 </GroupBox>
 
-                <!-- Quake 2 Executable Settings -->
-                <GroupBox Header="Quake 2 Executable (quake2.exe, q2pro.exe, r1q2.exe)" Margin="0,0,0,10">
-                    <StackPanel Margin="8">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Path:" Width="100" VerticalAlignment="Center"/>
-                            <TextBox Text="{Binding Q2ExecutablePath}" Width="250" VerticalContentAlignment="Center" IsReadOnly="True"/>
-                            <Button Content="Browse..." Command="{Binding BrowseQ2ExecutableCommand}" Width="80" Margin="5,0,0,0"/>
-                        </StackPanel>
-                    </StackPanel>
-                </GroupBox>
+                <Separator Margin="0,6,0,6"/>
 
                 <!-- Advanced Settings -->
-                <GroupBox Header="Advanced">
+                <GroupBox Header="Advanced" Margin="0,0,0,0">
                     <StackPanel Margin="8">
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                             <TextBlock Text="Max Concurrent Probes:" Width="140" VerticalAlignment="Center"/>

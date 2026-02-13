@@ -30,7 +30,7 @@ if %ERRORLEVEL% EQU 0 (
     echo Output location: %CD%\publish
     echo.
     echo The application is ready for distribution.
-    echo You can find Q2Connect.Wpf.exe in the publish folder.
+    echo You can find q2connect.exe in the publish folder.
     echo.
 ) else (
     echo.

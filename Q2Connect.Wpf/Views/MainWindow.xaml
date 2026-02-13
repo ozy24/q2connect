@@ -13,6 +13,9 @@
         <converters:Q2ColorToBrushConverter x:Key="ColorConverter"/>
         <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -25,16 +28,16 @@
         <Grid Grid.Row="0" Margin="10">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <Button Command="{Binding RefreshCommand}" 
-                        Width="100" Height="32" Margin="0,0,10,0" 
+                        Width="100" Height="32" Margin="0,0,10,0" FontSize="12"
                         IsEnabled="{Binding IsRefreshing, Converter={StaticResource InverseBooleanConverter}}">
                     <AccessText Text="_Refresh"/>
                 </Button>
                 <Button Command="{Binding ConnectCommand}" 
-                        Width="100" Height="32" Margin="0,0,10,0">
+                        Width="100" Height="32" Margin="0,0,10,0" FontSize="12">
                     <AccessText Text="_Connect"/>
                 </Button>
                 <Button Command="{Binding ToggleFavoriteCommand}" 
-                        Width="100" Height="32" Margin="0,0,10,0">
+                        Width="100" Height="32" Margin="0,0,10,0" FontSize="12">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                             <Setter Property="Content">
@@ -57,15 +60,15 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Command="{Binding OpenSettingsCommand}" 
-                        Width="100" Height="32" Margin="0,0,10,0">
+                        Width="100" Height="32" Margin="0,0,10,0" FontSize="12">
                     <AccessText Text="_Settings"/>
                 </Button>
                 <Button Command="{Binding OpenLogCommand}" 
-                        Width="100" Height="32" Margin="0,0,10,0">
+                        Width="100" Height="32" Margin="0,0,10,0" FontSize="12">
                     <AccessText Text="_Log"/>
                 </Button>
                 <Button Command="{Binding OpenAboutCommand}" 
-                        Width="100" Height="32">
+                        Width="100" Height="32" FontSize="12">
                     <AccessText Text="_About"/>
                 </Button>
             </StackPanel>
@@ -308,7 +311,7 @@
                         <TextBox Grid.Column="3" Text="{Binding AddressBookViewModel.NewLabel}" 
                                  Height="25" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,10,0"/>
                         <Button Grid.Column="4" Content="Add" Command="{Binding AddressBookViewModel.AddCommand}" 
-                                Width="80" Height="32" VerticalAlignment="Center"/>
+                                Width="80" Height="32" VerticalAlignment="Center" FontSize="12"/>
                     </Grid>
 
                     <!-- Address Book List -->

@@ -46,7 +46,7 @@ del /q "dist-temp-self-contained\*.pdb" 2>nul
 REM Create zip for self-contained version
 echo.
 echo Creating zip file for self-contained version...
-powershell -Command "Compress-Archive -Path 'dist-temp-self-contained\*' -DestinationPath 'dist\Q2Connect-v%VERSION%-self-contained.zip' -Force"
+powershell -Command "Compress-Archive -Path 'dist-temp-self-contained\*' -DestinationPath 'dist\Q2Connect-%VERSION%-full.zip' -Force"
 
 echo.
 echo ========================================
@@ -77,7 +77,7 @@ del /q "dist-temp-framework-dependent\*.pdb" 2>nul
 REM Create zip for framework-dependent version
 echo.
 echo Creating zip file for framework-dependent version...
-powershell -Command "Compress-Archive -Path 'dist-temp-framework-dependent\*' -DestinationPath 'dist\Q2Connect-v%VERSION%-framework-dependent.zip' -Force"
+powershell -Command "Compress-Archive -Path 'dist-temp-framework-dependent\*' -DestinationPath 'dist\Q2Connect-%VERSION%-lite.zip' -Force"
 
 REM Clean up temp directories
 echo.
@@ -97,8 +97,8 @@ echo Build Complete!
 echo ========================================
 echo.
 echo Created files in dist folder:
-echo   - Q2Connect-v%VERSION%-self-contained.zip (~62MB, no dependencies)
-echo   - Q2Connect-v%VERSION%-framework-dependent.zip (~1MB, requires .NET 10)
+echo   - Q2Connect-%VERSION%-full.zip (~62MB, no dependencies)
+echo   - Q2Connect-%VERSION%-lite.zip (~1MB, requires .NET 10)
 echo.
 echo Self-contained: Works on any Windows 10/11 PC
 echo Framework-dependent: Requires .NET 10 runtime (download from dotnet.microsoft.com)

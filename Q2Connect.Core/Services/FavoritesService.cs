@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Reflection;
 using System.Text.Json;
 using Q2Connect.Core.Models;
 using Q2Connect.Core.Protocol;
@@ -38,38 +37,14 @@ public class FavoritesService
     {
         if (portableMode)
         {
-            // Portable mode: use exe directory
-            var exePath = Assembly.GetEntryAssembly()?.Location;
-            if (string.IsNullOrEmpty(exePath))
+            // Portable mode: use app directory (AppContext.BaseDirectory works for single-file and normal publish; Assembly.Location is empty in single-file)
+            var exeDir = AppContext.BaseDirectory;
+            if (!string.IsNullOrEmpty(exeDir))
             {
-                // Fallback if entry assembly is not available
-                try
-                {
-                    var process = System.Diagnostics.Process.GetCurrentProcess();
-                    exePath = process.MainModule?.FileName;
-                }
-                catch (System.ComponentModel.Win32Exception)
-                {
-                    // MainModule may not be accessible in some scenarios (e.g., some security contexts)
-                    exePath = null;
-                }
-                catch (InvalidOperationException)
-                {
-                    // Process may have exited
-                    exePath = null;
-                }
-            }
-            
-            if (!string.IsNullOrEmpty(exePath))
-            {
-                var exeDir = Path.GetDirectoryName(exePath);
-                if (!string.IsNullOrEmpty(exeDir))
-                {
-                    _favoritesPath = Path.Combine(exeDir, "favorites.json");
-                    _settingsPath = Path.Combine(exeDir, "settings.json");
-                    _addressBookPath = Path.Combine(exeDir, "addressbook.json");
-                    return;
-                }
+                _favoritesPath = Path.Combine(exeDir, "favorites.json");
+                _settingsPath = Path.Combine(exeDir, "settings.json");
+                _addressBookPath = Path.Combine(exeDir, "addressbook.json");
+                return;
             }
         }
         
@@ -218,35 +193,10 @@ public class FavoritesService
 
     private static string GetPortableSettingsPath()
     {
-        var exePath = Assembly.GetEntryAssembly()?.Location;
-        if (string.IsNullOrEmpty(exePath))
-        {
-            try
-            {
-                var process = System.Diagnostics.Process.GetCurrentProcess();
-                exePath = process.MainModule?.FileName;
-            }
-            catch (System.ComponentModel.Win32Exception)
-            {
-                // MainModule may not be accessible in some scenarios (e.g., some security contexts)
-                exePath = null;
-            }
-            catch (InvalidOperationException)
-            {
-                // Process may have exited
-                exePath = null;
-            }
-        }
-        
-        if (!string.IsNullOrEmpty(exePath))
-        {
-            var exeDir = Path.GetDirectoryName(exePath);
-            if (!string.IsNullOrEmpty(exeDir))
-            {
-                return Path.Combine(exeDir, "settings.json");
-            }
-        }
-        
+        // AppContext.BaseDirectory works for single-file and normal publish (Assembly.Location is empty in single-file)
+        var exeDir = AppContext.BaseDirectory;
+        if (!string.IsNullOrEmpty(exeDir))
+            return Path.Combine(exeDir, "settings.json");
         return string.Empty;
     }
 

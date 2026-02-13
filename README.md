@@ -3,7 +3,7 @@
 A high-performance, native Windows desktop application to browse Quake II multiplayer servers (original Quake 2, not re-release). Built with .NET 10 and WPF, featuring native system theme support (automatically follows Windows dark/light theme).
 
 **Author:** ozy  
-**Repository:** https://github.com/ozy24/q2browser
+**Repository:** https://github.com/ozy24/q2connect
 
 ## Screenshots
 
@@ -39,7 +39,7 @@ A high-performance, native Windows desktop application to browse Quake II multip
 ### Installation & Running
 
 1. **Download and extract** the application files
-2. **Run Q2Connect.exe** (or use `dotnet run --project Q2Connect.Wpf/Q2Connect.Wpf.csproj` if running from source)
+2. **Run q2connect.exe** (or use `dotnet run --project Q2Connect.Wpf/Q2Connect.Wpf.csproj` if running from source)
 
 ### Getting Started
 

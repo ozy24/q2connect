@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         Title="Log" Height="500" Width="800"
         WindowStartupLocation="CenterOwner">
-    <Grid>
+    <Grid TextElement.FontSize="12">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -15,9 +15,9 @@
 
         <!-- Toolbar -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10" HorizontalAlignment="Left">
-            <Button Content="Clear Log" Click="ClearButton_Click" Width="100" Height="32" Margin="0,0,10,0"/>
-            <Button Content="Copy to Clipboard" Click="CopyButton_Click" Width="145" Height="32" Margin="0,0,10,0"/>
-            <Button Content="Save to File" Click="SaveButton_Click" Width="100" Height="32"/>
+            <Button Content="Clear Log" Click="ClearButton_Click" Width="100" Height="32" Margin="0,0,10,0" FontSize="12"/>
+            <Button Content="Copy to Clipboard" Click="CopyButton_Click" Width="145" Height="32" Margin="0,0,10,0" FontSize="12"/>
+            <Button Content="Save to File" Click="SaveButton_Click" Width="100" Height="32" FontSize="12"/>
         </StackPanel>
 
         <!-- Log List -->
@@ -32,12 +32,66 @@
                   VirtualizingPanel.IsVirtualizing="True"
                   VirtualizingPanel.VirtualizationMode="Recycling"
                   Margin="10,5"
+                  TextElement.FontSize="12"
                   LoadingRow="LogDataGrid_LoadingRow">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                </Style>
+            </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Time" Binding="{Binding Timestamp, StringFormat='HH:mm:ss.fff'}" Width="100"/>
-                <DataGridTextColumn Header="Level" Binding="{Binding Level}" Width="80"/>
-                <DataGridTextColumn Header="Message" Binding="{Binding Message}" Width="*"/>
-                <DataGridTextColumn Header="Details" Binding="{Binding Details}" Width="200"/>
+                <DataGridTextColumn Header="Time" Binding="{Binding Timestamp, StringFormat='HH:mm:ss.fff'}" Width="100">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                            <Setter Property="Padding" Value="8,0,0,0"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Margin" Value="8,0,0,0"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Level" Binding="{Binding Level}" Width="80">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                            <Setter Property="Padding" Value="8,0,0,0"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Margin" Value="8,0,0,0"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Message" Binding="{Binding Message}" Width="*">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                            <Setter Property="Padding" Value="8,0,0,0"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Margin" Value="8,0,0,0"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Details" Binding="{Binding Details}" Width="200">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                            <Setter Property="Padding" Value="8,0,0,0"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Margin" Value="8,0,0,0"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 

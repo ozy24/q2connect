@@ -42,8 +42,8 @@ if %ERRORLEVEL% EQU 0 (
     echo Output location: %CD%\dist
     echo.
     echo Distribution files:
-    echo   - Q2Connect.Wpf.exe (main executable, ~400KB)
-    echo   - Q2Connect.Wpf.dll (main library, ~600KB)
+    echo   - q2connect.exe (main executable, ~400KB)
+    echo   - q2connect.dll (main library, ~600KB)
     echo   - Q2Connect.Core.dll (core library, ~50KB)
     echo   - README.md
     echo   - Configuration files
