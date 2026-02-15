@@ -126,6 +126,7 @@
                       MouseDoubleClick="DataGrid_MouseDoubleClick"
                       PreviewMouseLeftButtonDown="DataGrid_PreviewMouseLeftButtonDown"
                       PreviewKeyDown="DataGrid_PreviewKeyDown"
+                      Sorting="DataGrid_ServerSorting"
                       TextElement.FontSize="12">
                 <DataGrid.ContextMenu>
                     <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
@@ -200,7 +201,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Ping" Binding="{Binding PingText}" Width="80">
+                    <DataGridTextColumn Header="Ping" Binding="{Binding PingText}" SortMemberPath="Ping" Width="80">
                         <DataGridTextColumn.HeaderStyle>
                             <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
                                 <Setter Property="Padding" Value="8,0,0,0"/>

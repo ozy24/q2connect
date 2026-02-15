@@ -237,6 +237,23 @@ public class MainViewModel : INotifyPropertyChanged, IDisposable
 
     public ICollectionView Servers => _serversView;
 
+    /// <summary>
+    /// Applies sort to the server list with favorites always first, then by the given column (or default).
+    /// </summary>
+    public void ApplyServerSort(string? propertyName, ListSortDirection? direction)
+    {
+        _serversView.SortDescriptions.Clear();
+        _serversView.SortDescriptions.Add(new SortDescription("IsFavorite", ListSortDirection.Descending));
+        if (!string.IsNullOrEmpty(propertyName) && propertyName != "IsFavorite" && direction.HasValue)
+        {
+            _serversView.SortDescriptions.Add(new SortDescription(propertyName, direction.Value));
+        }
+        else
+        {
+            _serversView.SortDescriptions.Add(new SortDescription("CurrentPlayers", ListSortDirection.Descending));
+        }
+    }
+
     public AddressBookViewModel? AddressBookViewModel
     {
         get => _addressBookViewModel;

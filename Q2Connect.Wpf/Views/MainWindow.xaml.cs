@@ -1,7 +1,11 @@
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 using Q2Connect.Wpf.ViewModels;
 
 namespace Q2Connect.Wpf.Views;
@@ -25,20 +29,28 @@ public partial class MainWindow : Window
 
     private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        // Only connect on double-click if it's not on the checkbox column
-        if (e.OriginalSource is FrameworkElement element)
-        {
-            // Check if the click was on a checkbox
-            if (element is CheckBox || element.Parent is CheckBox)
-            {
-                return; // Don't trigger connect when clicking checkbox
-            }
-        }
+        // Don't connect when double-clicking on column headers
+        if (e.OriginalSource is DependencyObject dep && FindAncestor<DataGridColumnHeader>(dep) != null)
+            return;
+        // Don't connect when double-clicking on a checkbox
+        if (e.OriginalSource is FrameworkElement element && (element is CheckBox || element.Parent is CheckBox))
+            return;
 
         if (DataContext is MainViewModel viewModel && viewModel.SelectedServer != null)
         {
             viewModel.ConnectCommand.Execute(null);
         }
+    }
+
+    private static T? FindAncestor<T>(DependencyObject current) where T : DependencyObject
+    {
+        while (current != null)
+        {
+            if (current is T found)
+                return found;
+            current = VisualTreeHelper.GetParent(current);
+        }
+        return null;
     }
 
     private void DataGrid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -68,6 +80,25 @@ public partial class MainWindow : Window
             viewModel.ConnectCommand.Execute(null);
             e.Handled = true;
         }
+    }
+
+    private void DataGrid_ServerSorting(object sender, DataGridSortingEventArgs e)
+    {
+        if (DataContext is not MainViewModel viewModel)
+            return;
+        var column = e.Column;
+        var propertyName = column.SortMemberPath;
+        if (string.IsNullOrEmpty(propertyName) && column is DataGridBoundColumn boundColumn && boundColumn.Binding is Binding binding && binding.Path != null)
+            propertyName = binding.Path.Path;
+        if (string.IsNullOrEmpty(propertyName))
+            propertyName = "CurrentPlayers";
+        // When Handled = true the DataGrid does not set SortDirection, so compute and set it ourselves
+        var direction = column.SortDirection != ListSortDirection.Ascending
+            ? ListSortDirection.Ascending
+            : ListSortDirection.Descending;
+        column.SortDirection = direction;
+        viewModel.ApplyServerSort(propertyName, direction);
+        e.Handled = true;
     }
 
     private void TabControl_PreviewKeyDown(object sender, KeyEventArgs e)
